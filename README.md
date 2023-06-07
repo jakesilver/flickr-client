@@ -1,1 +1,4 @@
-# flickr-take-home
+# Flickr Client
+
+### Take Home Assignment from Skylight
+

@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.jakesilver.takehome.api'
+    compileSdk libs.versions.compileSdk.get().toInteger()
+
+    defaultConfig {
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdk libs.versions.targetSdk.get().toInteger()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            buildConfigField "String", "FLICKR_API_KEY", "\"2b2dfa9923da3b04ce8f64cf7b91d373\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation libs.flickrj.android
+    implementation files('libs/slf4j-android-1.6.1-RC1.jar')
+
+    // Networking
+    implementation libs.okhttp.okhttp
+
+    // Kotlin
+    implementation libs.kotlin.std.lib
+    implementation libs.kotlin.coroutines.core
+    implementation libs.kotlin.coroutines.android
+    implementation libs.androidx.test.junit
+
+    // Test
+    testImplementation libs.junit
+    androidTestImplementation libs.junit
+}
