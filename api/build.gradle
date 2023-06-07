@@ -51,6 +51,7 @@ dependencies {
     implementation libs.kotlin.coroutines.core
     implementation libs.kotlin.coroutines.android
     implementation libs.androidx.test.junit
+    implementation libs.androidx.paging.ktx
 
     // Test
     testImplementation libs.junit
