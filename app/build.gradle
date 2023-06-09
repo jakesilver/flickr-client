@@ -59,8 +59,14 @@ dependencies {
     // AndroidX Libraries
     implementation libs.androidx.core
     implementation libs.androidx.lifecycle.runtime.ktx
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+
+    // DI
+    ksp(libs.kotlin.inject)
+    implementation(libs.kotlin.inject.runtime)
 
     // Compose
+    implementation libs.androidx.activity.compose
     implementation libs.androidx.compose.ui.ui
     implementation libs.androidx.compose.foundation.layout
     implementation libs.androidx.compose.material.material
@@ -68,7 +74,8 @@ dependencies {
     implementation libs.androidx.compose.material.icons.extended
     implementation libs.androidx.compose.animation.animation
     implementation libs.androidx.compose.ui.tooling
-    implementation libs.androidx.activity.compose
+    implementation libs.androidx.paging.ktx
+    implementation libs.androidx.paging.compose
 
     implementation libs.accompanist.coil
     implementation libs.coil.compose
