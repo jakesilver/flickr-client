@@ -22,6 +22,7 @@ coroutines = "1.7.1"
 espresso = "3.1.1"
 kotlin = "1.8.10"
 kotlininject = "0.6.1"
+ksp = "1.8.0"
 ktlint = "0.49.1"
 okhttp = "4.11.0"
 ktor = "2.3.0"
@@ -37,7 +38,9 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 cacheFixPlugin = { id = "org.gradle.android.cache-fix", version = "2.7.1" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 paparazzi = { id = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazzi" }
 
 [libraries]
@@ -97,6 +100,11 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin-extensions = { module = "org.jetbrains.kotlin:kotlin-android-extensions", version.ref = "kotlin" }
 kotlin-std-lib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-inject = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlininject" }
+kotlin-inject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "kotlininject" }
+ksp = { module = "com.google.devtools.ksp:symbol-processing", version.ref = "ksp" }
+ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+
 
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 

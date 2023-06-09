@@ -1,4 +1,11 @@
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
 include ':app'
 include ':api'
 include ':ui'

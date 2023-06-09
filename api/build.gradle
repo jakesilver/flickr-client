@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version '1.8.0-1.0.9'
 }
 
 android {
@@ -40,8 +41,13 @@ android {
 
 dependencies {
 
+    // Flickr
     implementation libs.flickrj.android
     implementation files('libs/slf4j-android-1.6.1-RC1.jar')
+
+    // DI
+    ksp(libs.kotlin.inject)
+    implementation(libs.kotlin.inject.runtime)
 
     // Networking
     implementation libs.okhttp.okhttp

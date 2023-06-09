@@ -3,6 +3,7 @@ package com.jakesilver.takehome.api
 import com.googlecode.flickrjandroid.Flickr
 import com.googlecode.flickrjandroid.photos.PhotosInterface
 import com.googlecode.flickrjandroid.photos.SearchParameters
+import me.tatarka.inject.annotations.Inject
 import java.util.Date
 
 interface PhotoService {
@@ -10,6 +11,7 @@ interface PhotoService {
     suspend fun getPhotoDetails(photoId: String?): PhotoDetails
 }
 
+@Inject
 internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
     private var flickr: PhotosInterface = Flickr(apiKey).photosInterface
 
@@ -33,7 +35,7 @@ internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
                 title = photo.title,
             )
         }
-        return PhotoResponse(photos, photoList.page)
+        return PhotoResponse(photos, photoList.page, photoList.total)
     }
 
     override suspend fun getPhotoDetails(photoId: String?): PhotoDetails {
@@ -52,6 +54,7 @@ internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
 data class PhotoResponse(
     val photoSummaries: List<PhotoSummary>,
     val pageOffset: Int,
+    val totalPhotos: Int,
 )
 
 data class PhotoSummary(
