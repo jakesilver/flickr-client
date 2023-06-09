@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Home(
                         photoViewModel = photoViewModel,
-                        onPhotoClick = { photoViewModel.photoSummaryOnClick(it.id) },
+                        onPhotoClick = { photoViewModel.onPhotoClicked(it.id) },
                         modifier = Modifier
                             .fillMaxSize()
                             .systemBarsPadding()

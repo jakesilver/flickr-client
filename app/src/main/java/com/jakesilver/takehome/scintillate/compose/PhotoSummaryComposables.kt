@@ -1,5 +1,3 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package com.jakesilver.takehome.scintillate.compose
 
 import androidx.activity.compose.ReportDrawn
@@ -45,7 +43,7 @@ fun Home(
         modifier = modifier
     ) {
         TagInputTextField(
-            onTagQuery = { tag -> photoViewModel.photoSummaryOnClick(tag) },
+            onTagQuery = { tag -> photoViewModel.searchByTag(tag) },
             modifier = Modifier.padding(8.dp)
         )
         PhotoSummaryScreen(

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface FlickrRepository {
     fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>>
+    suspend fun getPhotoDetails(photoId: String): PhotoDetails
 }
 
 class FlickrRepositoryImpl constructor(private val service: PhotoService): FlickrRepository
@@ -18,8 +19,12 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService): Flick
         ).flow
     }
 
+    override suspend fun getPhotoDetails(photoId: String): PhotoDetails {
+        return service.getPhotoDetails(photoId)
+    }
+
     private companion object {
-        private const val PAGE_SIZE = 10
+        private const val PAGE_SIZE = 20
     }
 
 }

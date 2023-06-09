@@ -1,22 +1,38 @@
 package com.jakesilver.takehome.scintillate
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jakesilver.takehome.api.FlickrRepository
+import com.jakesilver.takehome.api.PhotoSummary
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 
 class PhotoViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val repository: FlickrRepository
 ) : ViewModel() {
 
-    private var searchTag: String? = savedStateHandle["tag"]
+    private val _searchByTag = MutableStateFlow<String?>(null)
 
-    val photoSummaries = repository.getPhotoResultsStream(searchTag ?: "").cachedIn(viewModelScope)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val photoSummaries: Flow<PagingData<PhotoSummary>> = _searchByTag
+        .filterNotNull()
+        .flatMapLatest { searchTag ->
+            repository.getPhotoResultsStream(searchTag)
+        }.cachedIn(viewModelScope)
 
-    fun photoSummaryOnClick(tag: String) {
-        repository.getPhotoResultsStream(tag)
-        searchTag = tag
+    fun searchByTag(tag: String) {
+        _searchByTag.value = tag
+    }
+
+    fun onPhotoClicked(photoId: String) {
+        viewModelScope.launch {
+            val photoDetails = repository.getPhotoDetails(photoId)
+        }
     }
 }

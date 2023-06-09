@@ -9,13 +9,14 @@ class FlickrPagingSource(
 ) : PagingSource<Int, PhotoSummary>() {
     override fun getRefreshKey(state: PagingState<Int, PhotoSummary>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PhotoSummary> {
-        val page = params.key ?: 1
         return try {
+            val page = params.key ?: 1
             val response = service.getPhotoSummariesByTag(tag, page, params.loadSize)
             val photos = response.photoSummaries
             LoadResult.Page(

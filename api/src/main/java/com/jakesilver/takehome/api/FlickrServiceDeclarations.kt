@@ -11,7 +11,7 @@ interface PhotoService {
 }
 
 internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
-    private var flickr: PhotosInterface = Flickr(apiKey).photosInterface
+    private val flickr: PhotosInterface = Flickr(apiKey).photosInterface
 
     override suspend fun getPhotoSummariesByTag(
         tags: String,
@@ -21,8 +21,8 @@ internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
 
         val photoList = flickr.search(
             SearchParameters().apply {
-            this.tags = arrayOf(tags)
-        },
+                this.tags = arrayOf(tags)
+            },
             numImagePerPage,
             page
         )
