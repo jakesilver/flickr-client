@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +17,7 @@ import coil.Coil
 import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jakesilver.takehome.api.di.apiModule
+import com.jakesilver.takehome.scintillate.compose.Home
 import com.jakesilver.takehome.scintillate.di.appModule
 import com.jakesilver.takehome.scintillate.ui.theme.ScintillateTheme
 import org.koin.android.ext.koin.androidContext
@@ -26,6 +29,7 @@ class MainActivity : ComponentActivity() {
 
     private val photoViewModel: PhotoViewModel by viewModel()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         startKoin {
             androidLogger()
@@ -60,10 +64,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    // User Input with Label
-                    TagInputTextField()
-                    // Photo Summaries show or empty state
-                    Home(photoViewModel = photoViewModel , onPhotoClick = { photoViewModel.photoSummaryOnClick(it.id) }, modifier = Modifier.fillMaxSize())
+                    Home(
+                        photoViewModel = photoViewModel,
+                        onPhotoClick = { photoViewModel.photoSummaryOnClick(it.id) },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .systemBarsPadding()
+                    )
+
                 }
             }
         }

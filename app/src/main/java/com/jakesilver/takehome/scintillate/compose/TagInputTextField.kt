@@ -1,4 +1,4 @@
-package com.jakesilver.takehome.scintillate
+package com.jakesilver.takehome.scintillate.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize

@@ -1,19 +1,14 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.jakesilver.takehome.scintillate
+package com.jakesilver.takehome.scintillate.compose
 
 import androidx.activity.compose.ReportDrawn
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.waterfallPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -36,6 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jakesilver.takehome.api.PhotoSummary
 import com.jakesilver.takehome.app.R
+import com.jakesilver.takehome.scintillate.PhotoViewModel
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.getViewModel
 
@@ -118,7 +113,7 @@ private fun PhotoSummaryItem(photo: PhotoSummary, onClick: () -> Unit) {
             .padding(bottom = 4.dp)
     ) {
         Column(Modifier.fillMaxWidth()) {
-            PhotoSummaryImage(
+            PhotoImage(
                 url = photo.url,
                 contentDescription = photo.title,
                 modifier = Modifier
@@ -139,7 +134,7 @@ private fun PhotoSummaryItem(photo: PhotoSummary, onClick: () -> Unit) {
 }
 
 @Composable
-private fun PhotoSummaryImage(url: String, contentDescription: String, modifier: Modifier) {
+fun PhotoImage(url: String, contentDescription: String, modifier: Modifier) {
     AsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)

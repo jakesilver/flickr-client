@@ -15,7 +15,8 @@ class PhotoViewModel(
 
     val photoSummaries = repository.getPhotoResultsStream(searchTag ?: "").cachedIn(viewModelScope)
 
-    fun photoSummaryOnClick(id: String) {
-        // TODO
+    fun photoSummaryOnClick(tag: String) {
+        repository.getPhotoResultsStream(tag)
+        searchTag = tag
     }
 }
