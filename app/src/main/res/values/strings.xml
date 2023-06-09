@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Scintillate</string>
+    <!--        User Input      -->
+    <string name="tag_search_label">Please enter a Flickr search</string>
+    <string name="tag_search_hint">Search by Tag</string>
+    <string name="empty_state_label">No photo results found.</string>
 </resources>

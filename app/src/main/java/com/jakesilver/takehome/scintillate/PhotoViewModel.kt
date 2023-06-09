@@ -16,4 +16,8 @@ class PhotoViewModel(
     private var searchTag: String? = savedStateHandle["tag"]
 
     val photoSummaries = repository.getPhotoResultsStream(searchTag ?: "").cachedIn(viewModelScope)
+
+    fun photoSummaryOnClick(id: String) {
+        // TODO
+    }
 }
