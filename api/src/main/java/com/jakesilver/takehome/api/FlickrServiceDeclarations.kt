@@ -1,55 +1,84 @@
 package com.jakesilver.takehome.api
 
 import com.googlecode.flickrjandroid.Flickr
+import com.googlecode.flickrjandroid.Flickr.SAFETYLEVEL_SAFE
 import com.googlecode.flickrjandroid.photos.PhotosInterface
 import com.googlecode.flickrjandroid.photos.SearchParameters
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 interface PhotoService {
-    suspend fun getPhotoSummariesByTag(tags: String, numImagePerPage: Int, page: Int): PhotoResponse
-    suspend fun getPhotoDetails(photoId: String?): PhotoDetails
+    suspend fun getPhotoSummariesByTag(
+        tags: String,
+        numImagePerPage: Int,
+        page: Int
+    ): PhotoSummaryResponse
+
+    suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse
 }
 
-internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
+internal class PhotoServiceImpl(apiKey: String) : PhotoService {
     private val flickr: PhotosInterface = Flickr(apiKey).photosInterface
 
     override suspend fun getPhotoSummariesByTag(
         tags: String,
         numImagePerPage: Int,
         page: Int
-    ): PhotoResponse {
-
-        val photoList = flickr.search(
-            SearchParameters().apply {
-                this.tags = arrayOf(tags)
-            },
-            numImagePerPage,
-            page
-        )
-        val photos = photoList.map { photo ->
-            PhotoSummary(
-                id = photo.id,
-                url = photo.url,
-                title = photo.title,
-            )
+    ): PhotoSummaryResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val photoList = flickr.search(
+                    SearchParameters().apply {
+                        this.tags = arrayOf(tags)
+                        safeSearch = SAFETYLEVEL_SAFE
+                    },
+                    numImagePerPage,
+                    page
+                )
+                val photos = photoList.map { photo ->
+                    PhotoSummary(
+                        id = photo.id,
+                        url = photo.mediumUrl,
+                        title = photo.title,
+                    )
+                }
+                return@withContext PhotoSummaryResponse(photos, photoList.page, photoList.total)
+            } catch (exception: Exception) {
+                return@withContext PhotoSummaryResponse(emptyList(), 1, 0)
+            }
         }
-        return PhotoResponse(photos, photoList.page, photoList.total)
     }
 
-    override suspend fun getPhotoDetails(photoId: String?): PhotoDetails {
-        val photo = flickr.getPhoto(photoId)
-        return PhotoDetails(
-            id = photo.id,
-            url = photo.url,
-            title = photo.title,
-            description = photo.description,
-            dateTaken = photo.dateTaken,
-            datePosted = photo.datePosted
-        )
+    override suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse {
+        withContext(Dispatchers.IO) {
+            try {
+                val photo = flickr.getInfo(photoId, null)
+                return@withContext PhotoDetailsResponse(
+                    photo = PhotoDetails(
+                        id = photo.id,
+                        url = photo.url,
+                        title = photo.title,
+                        description = photo.description,
+                        dateTaken = photo.dateTaken,
+                        datePosted = photo.datePosted
+                    )
+                )
+            } catch (exception: java.lang.Exception) {
+                return@withContext PhotoDetailsResponse(error = Error.NoPhotoFound)
+            }
+        }
+        return PhotoDetailsResponse(error = Error.NoPhotoFound)
     }
 }
 
-data class PhotoResponse(
+sealed class Error {
+    object NoPhotoFound : Error()
+}
+
+data class PhotoDetailsResponse(val photo: PhotoDetails? = null, val error: Error? = null)
+
+data class PhotoSummaryResponse(
     val photoSummaries: List<PhotoSummary>,
     val pageOffset: Int,
     val totalPhotos: Int,

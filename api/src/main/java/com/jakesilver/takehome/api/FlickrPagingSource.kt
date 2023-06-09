@@ -17,7 +17,7 @@ class FlickrPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PhotoSummary> {
         return try {
             val page = params.key ?: 1
-            val response = service.getPhotoSummariesByTag(tag, page, params.loadSize)
+            val response = service.getPhotoSummariesByTag(tag, params.loadSize, page)
             val photos = response.photoSummaries
             LoadResult.Page(
                 data = photos,
