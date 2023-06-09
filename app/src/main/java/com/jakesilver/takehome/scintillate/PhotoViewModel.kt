@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.jakesilver.takehome.api.FlickrRepository
-import me.tatarka.inject.annotations.Inject
 
-@Inject
 class PhotoViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val repository: FlickrRepository

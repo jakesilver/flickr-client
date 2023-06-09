@@ -3,7 +3,6 @@ package com.jakesilver.takehome.api
 import com.googlecode.flickrjandroid.Flickr
 import com.googlecode.flickrjandroid.photos.PhotosInterface
 import com.googlecode.flickrjandroid.photos.SearchParameters
-import me.tatarka.inject.annotations.Inject
 import java.util.Date
 
 interface PhotoService {
@@ -11,7 +10,6 @@ interface PhotoService {
     suspend fun getPhotoDetails(photoId: String?): PhotoDetails
 }
 
-@Inject
 internal class PhotoServiceImpl(private val apiKey: String) : PhotoService {
     private var flickr: PhotosInterface = Flickr(apiKey).photosInterface
 

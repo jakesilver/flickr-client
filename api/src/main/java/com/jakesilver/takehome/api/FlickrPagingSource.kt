@@ -2,9 +2,7 @@ package com.jakesilver.takehome.api
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import me.tatarka.inject.annotations.Inject
 
-@Inject
 class FlickrPagingSource(
     private val service: PhotoService,
     private val tag: String

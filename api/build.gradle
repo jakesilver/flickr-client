@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.devtools.ksp' version '1.8.0-1.0.8'
 }
 
 android {
@@ -31,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
@@ -46,8 +45,8 @@ dependencies {
     implementation files('libs/slf4j-android-1.6.1-RC1.jar')
 
     // DI
-    ksp(libs.kotlin.inject)
-    implementation(libs.kotlin.inject.runtime)
+    implementation libs.koin.android
+
 
     // Networking
     implementation libs.okhttp.okhttp

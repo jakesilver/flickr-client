@@ -31,11 +31,12 @@ import coil.request.ImageRequest
 import com.jakesilver.takehome.api.PhotoSummary
 import com.jakesilver.takehome.app.R
 import kotlinx.coroutines.flow.Flow
+import org.koin.androidx.compose.getViewModel
 
 
 @Composable
 fun Home(
-    photoViewModel: PhotoViewModel,
+    photoViewModel: PhotoViewModel = getViewModel(),
     onPhotoClick: (PhotoSummary) -> Unit,
     modifier: Modifier,
 ) {
