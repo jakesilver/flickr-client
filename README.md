@@ -1,5 +1,7 @@
 # Flickr Client
 
+<img src="https://github.com/jakesilver/flickr-take-home/assets/5214972/636b96d5-cfa2-461d-8234-00c053acf7e7" width="300" />
+
 #### Feature requirements
 - Photos search
   - (bonus) Infinite scroll on search results page
