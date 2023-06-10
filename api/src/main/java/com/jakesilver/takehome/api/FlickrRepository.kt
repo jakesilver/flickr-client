@@ -7,13 +7,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface FlickrRepository {
 
-    suspend fun testSearch(tag:String): PhotoSummaryResponse
+    suspend fun testSearch(tag: String): PhotoSummaryResponse
     fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>>
     suspend fun getPhotoDetails(photoId: String): PhotoDetails?
 }
 
-class FlickrRepositoryImpl constructor(private val service: PhotoService): FlickrRepository
-{
+class FlickrRepositoryImpl constructor(private val service: PhotoService) : FlickrRepository {
     override suspend fun testSearch(tag: String): PhotoSummaryResponse {
         return service.getPhotoSummariesByTag(tag, 10, 1)
     }
@@ -21,7 +20,7 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService): Flick
     override fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
-            pagingSourceFactory = { FlickrPagingSource(service, tag) }
+            pagingSourceFactory = { FlickrPagingSource(service, tag) },
         ).flow
     }
 
@@ -32,5 +31,4 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService): Flick
     private companion object {
         private const val PAGE_SIZE = 10
     }
-
 }

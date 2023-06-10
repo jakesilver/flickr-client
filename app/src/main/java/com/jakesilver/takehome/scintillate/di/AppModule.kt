@@ -8,7 +8,7 @@ import org.koin.dsl.module
 val appModule = module {
     viewModel { (handle: SavedStateHandle) ->
         PhotoViewModel(
-            repository = get()
+            repository = get(),
         )
     }
 }

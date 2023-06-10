@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
@@ -29,7 +28,6 @@ class MainActivity : ComponentActivity() {
 
     private val photoViewModel: PhotoViewModel by viewModel()
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         startKoin {
             androidLogger()
@@ -37,8 +35,8 @@ class MainActivity : ComponentActivity() {
             modules(
                 listOf(
                     apiModule,
-                    appModule
-                )
+                    appModule,
+                ),
             )
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -47,7 +45,7 @@ class MainActivity : ComponentActivity() {
         Coil.setImageLoader(
             ImageLoader.Builder(this)
                 .crossfade(true)
-                .build()
+                .build(),
         )
 
         setContent {
@@ -56,7 +54,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(systemUiController, useDarkIcons) {
                 systemUiController.setSystemBarsColor(
                     color = Color.Transparent,
-                    darkIcons = useDarkIcons
+                    darkIcons = useDarkIcons,
                 )
             }
             ScintillateTheme {
@@ -69,9 +67,8 @@ class MainActivity : ComponentActivity() {
                         onPhotoClick = { photoViewModel.onPhotoClicked(it.id) },
                         modifier = Modifier
                             .fillMaxSize()
-                            .systemBarsPadding()
+                            .systemBarsPadding(),
                     )
-
                 }
             }
         }

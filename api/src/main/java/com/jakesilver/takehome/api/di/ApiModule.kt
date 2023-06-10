@@ -16,12 +16,12 @@ val apiModule = module {
     single(qualifier<NamedConfiguration.FlickrApiKey>()) { BuildConfig.FLICKR_API_KEY }
     single<PhotoService> {
         PhotoServiceImpl(
-            apiKey = get(qualifier<NamedConfiguration.FlickrApiKey>())
+            apiKey = get(qualifier<NamedConfiguration.FlickrApiKey>()),
         )
     }
     single<FlickrRepository> {
         FlickrRepositoryImpl(
-            service = get()
+            service = get(),
         )
     }
 }

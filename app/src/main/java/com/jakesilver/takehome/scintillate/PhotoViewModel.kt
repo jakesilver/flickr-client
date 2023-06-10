@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class PhotoViewModel(
-    private val repository: FlickrRepository
+    private val repository: FlickrRepository,
 ) : ViewModel() {
 
     private val _searchByTag = MutableStateFlow<String?>(null)

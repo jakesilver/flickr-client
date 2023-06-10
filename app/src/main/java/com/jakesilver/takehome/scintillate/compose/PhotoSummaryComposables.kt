@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,7 +31,6 @@ import com.jakesilver.takehome.scintillate.PhotoViewModel
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.getViewModel
 
-
 @Composable
 fun Home(
     photoViewModel: PhotoViewModel = getViewModel(),
@@ -41,11 +38,11 @@ fun Home(
     modifier: Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         TagInputTextField(
             onTagQuery = { tag -> photoViewModel.searchByTag(tag) },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         )
         PhotoSummaryScreen(
             photoSummaries = photoViewModel.photoSummaries,
@@ -68,14 +65,14 @@ private fun PhotoSummaryScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier.padding(12.dp),
-            contentPadding = PaddingValues(all = 12.dp)
+            contentPadding = PaddingValues(all = 12.dp),
         ) {
             items(
                 count = photoPagingItems.itemCount,
                 key = { index ->
                     val photo = photoPagingItems[index]
                     photo?.id ?: ""
-                }
+                },
             ) { index ->
                 val photo = photoPagingItems[index] ?: return@items
                 PhotoSummaryItem(photo = photo) {
@@ -93,11 +90,11 @@ private fun EmptyPhotoSearch(modifier: Modifier) {
     Column(
         modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(id = R.string.empty_state_label),
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -109,14 +106,14 @@ private fun PhotoSummaryItem(photo: PhotoSummary, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .padding(horizontal = 4.dp)
-            .padding(bottom = 4.dp)
+            .padding(bottom = 4.dp),
     ) {
         Column(Modifier.fillMaxWidth()) {
             PhotoImage(
                 url = photo.url,
                 contentDescription = photo.title,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
             Text(
                 text = photo.url,
@@ -125,7 +122,7 @@ private fun PhotoSummaryItem(photo: PhotoSummary, onClick: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
-                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .wrapContentWidth(Alignment.CenterHorizontally),
             )
         }
     }
@@ -142,6 +139,6 @@ fun PhotoImage(url: String, contentDescription: String, modifier: Modifier) {
             .allowHardware(false)
             .build(),
         contentDescription = contentDescription,
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.Crop,
     )
 }

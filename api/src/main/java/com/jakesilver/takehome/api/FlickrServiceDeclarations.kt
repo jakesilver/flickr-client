@@ -12,7 +12,7 @@ interface PhotoService {
     suspend fun getPhotoSummariesByTag(
         tags: String,
         numImagePerPage: Int,
-        page: Int
+        page: Int,
     ): PhotoSummaryResponse
 
     suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse
@@ -24,7 +24,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
     override suspend fun getPhotoSummariesByTag(
         tags: String,
         numImagePerPage: Int,
-        page: Int
+        page: Int,
     ): PhotoSummaryResponse {
         return withContext(Dispatchers.IO) {
             try {
@@ -34,7 +34,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
                         safeSearch = SAFETYLEVEL_SAFE
                     },
                     numImagePerPage,
-                    page
+                    page,
                 )
                 val photos = photoList.map { photo ->
                     PhotoSummary(
@@ -61,8 +61,8 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
                         title = photo.title,
                         description = photo.description,
                         dateTaken = photo.dateTaken,
-                        datePosted = photo.datePosted
-                    )
+                        datePosted = photo.datePosted,
+                    ),
                 )
             } catch (exception: java.lang.Exception) {
                 return@withContext PhotoDetailsResponse(error = Error.NoPhotoFound)

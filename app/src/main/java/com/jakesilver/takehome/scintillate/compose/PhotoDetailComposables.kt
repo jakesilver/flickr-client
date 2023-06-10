@@ -28,7 +28,7 @@ import java.util.Locale
 fun DetailScreen(
     title: String,
     onUpClicked: () -> Unit,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -44,28 +44,29 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = Color.White,
                         )
                     }
-                })
+                },
+            )
         },
         content = { paddingValues ->
             content(paddingValues)
-        }
+        },
     )
 }
 
 @Composable
 fun PhotoDetail(
     photoDetails: PhotoDetails,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Column(Modifier.fillMaxWidth()) {
         Box(Modifier.padding(all = 10.dp)) {
             PhotoImage(
                 url = photoDetails.url,
                 contentDescription = photoDetails.description,
-                modifier = modifier
+                modifier = modifier,
             )
             Text(
                 text = photoDetails.title,
@@ -88,7 +89,6 @@ fun PhotoDetail(
                 style = MaterialTheme.typography.bodyLarge,
             )
         }
-
     }
 }
 
@@ -98,6 +98,6 @@ private fun DateText(date: Date, modifier: Modifier, style: androidx.compose.ui.
     Text(
         text = formattedDate,
         modifier = modifier,
-        style = style
+        style = style,
     )
 }
