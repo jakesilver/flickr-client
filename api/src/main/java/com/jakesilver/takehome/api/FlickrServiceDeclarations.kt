@@ -51,7 +51,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
     }
 
     override suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse {
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             try {
                 val photo = flickr.getInfo(photoId, null)
                 return@withContext PhotoDetailsResponse(
@@ -68,7 +68,6 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
                 return@withContext PhotoDetailsResponse(error = Error.NoPhotoFound)
             }
         }
-        return PhotoDetailsResponse(error = Error.NoPhotoFound)
     }
 }
 

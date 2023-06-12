@@ -4,12 +4,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface FlickrRepository {
 
     suspend fun testSearch(tag: String): PhotoSummaryResponse
     fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>>
-    suspend fun getPhotoDetails(photoId: String): PhotoDetails?
+    suspend fun getPhotoDetails(photoId: String): Flow<PhotoDetails?>
 }
 
 class FlickrRepositoryImpl constructor(private val service: PhotoService) : FlickrRepository {
@@ -24,8 +25,11 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService) : Flic
         ).flow
     }
 
-    override suspend fun getPhotoDetails(photoId: String): PhotoDetails? {
-        return service.getPhotoDetails(photoId).photo
+    override suspend fun getPhotoDetails(photoId: String): Flow<PhotoDetails?> {
+        return flow {
+            service.getPhotoDetails(photoId).photo
+        }
+
     }
 
     private companion object {
