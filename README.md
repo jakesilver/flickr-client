@@ -4,12 +4,11 @@
 
 #### Feature requirements
 - Photos search
-  - (bonus) Infinite scroll on search results page
   - App should query Flickr’s API for a given tag (e.g., “moon”)
   - Given a response, it should list the results with links to photo detail pages
+  - Infinite scroll on search results page
 - Photo detail page
-  - Be sure to include:
-  - Hero image
+  - Image
   - Photo title
   - Photo description
   - Date taken
