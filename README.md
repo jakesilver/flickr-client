@@ -1,6 +1,6 @@
 # Flickr Client (WIP)
 
-<img src="https://github.com/jakesilver/flickr-take-home/assets/5214972/636b96d5-cfa2-461d-8234-00c053acf7e7" width="300" />
+<img src="https://github.com/jakesilver/flickr-client/assets/5214972/2a3e6ed9-f980-46ef-a535-3e82e8db0f44" width="300" />
 
 #### Feature requirements
 - Photos search
