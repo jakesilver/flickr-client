@@ -24,10 +24,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-
-        debug {
-            buildConfigField "String", "FLICKR_API_KEY", "\"2b2dfa9923da3b04ce8f64cf7b91d373\""
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

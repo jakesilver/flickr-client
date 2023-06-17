@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Scintillate</string>
+    <string name="photo_search_title">Photo Search</string>
+    <string name="photo_details_title">Photo Details</string>
     <!--        User Input      -->
     <string name="tag_search_label">Please enter a Flickr search</string>
     <string name="tag_search_hint">Search by Tag</string>
     <string name="empty_state_label">No photo results found.</string>
+    <!--        Photo Details   -->
+    <string name="generic_error">Something went wrong.</string>
 </resources>

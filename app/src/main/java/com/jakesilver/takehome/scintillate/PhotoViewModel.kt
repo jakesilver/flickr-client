@@ -1,5 +1,6 @@
 package com.jakesilver.takehome.scintillate
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -19,8 +20,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PhotoViewModel(
+    savedStateHandle: SavedStateHandle,
     private val repository: FlickrRepository,
 ) : ViewModel() {
+
+    private val photoId: String = savedStateHandle["photoId"] ?: ""
 
     private val _searchByTag = MutableStateFlow<String?>(null)
     private val _photoDetailUiState = MutableStateFlow(PhotoDetailUiState(isLoading = true))
@@ -42,12 +46,16 @@ class PhotoViewModel(
         _searchByTag.value = tag
     }
 
-    fun onPhotoClicked(photoId: String) {
-        _photoDetailUiState.value = _photoDetailUiState.value.copy(isLoading = true)
+    fun onPhotoClicked() {
         viewModelScope.launch {
+            _photoDetailUiState.value = _photoDetailUiState.value.copy(isLoading = true)
             repository.getPhotoDetails(photoId).collect { photoDetails ->
                 _photoDetailUiState.value =
-                    PhotoDetailUiState(photoDetails = photoDetails, isLoading = false, errorMessage = null)
+                    PhotoDetailUiState(
+                        photoDetails = photoDetails,
+                        isLoading = false,
+                        errorMessage = null
+                    )
             }
         }
     }

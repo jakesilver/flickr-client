@@ -18,6 +18,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jakesilver.takehome.api.di.apiModule
 import com.jakesilver.takehome.scintillate.compose.Home
 import com.jakesilver.takehome.scintillate.di.appModule
+import com.jakesilver.takehome.scintillate.navigation.ScintillateApp
 import com.jakesilver.takehome.scintillate.ui.theme.ScintillateTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -62,12 +63,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    Home(
+                    ScintillateApp(
                         photoViewModel = photoViewModel,
-                        onPhotoClick = { photoViewModel.onPhotoClicked(it.id) },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .systemBarsPadding(),
                     )
                 }
             }
