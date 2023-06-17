@@ -48,10 +48,11 @@ fun ScintillateNavHost(
             arguments = listOf(navArgument("photoId") {
                 type = NavType.StringType
             })
-        ) {
+        ) { backStackEntry ->
             DetailScreen(
                 title = stringResource(id = R.string.photo_details_title),
                 onUpClicked = { navController.navigateUp() },
+                photoId = backStackEntry.arguments?.getString("photoId") ?: "",
                 photoViewModel = photoViewModel,
                 modifier = Modifier
                     .fillMaxSize()

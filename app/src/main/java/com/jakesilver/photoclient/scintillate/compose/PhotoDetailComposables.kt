@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.navArgument
 import com.jakesilver.photoclient.app.R
 import com.jakesilver.photoclient.scintillate.PhotoDetailUiState
 import com.jakesilver.photoclient.scintillate.PhotoViewModel
@@ -34,6 +35,7 @@ import java.util.Locale
 fun DetailScreen(
     title: String,
     onUpClicked: () -> Unit,
+    photoId: String,
     photoViewModel: PhotoViewModel = getViewModel(),
     modifier: Modifier,
 ) {
@@ -58,17 +60,21 @@ fun DetailScreen(
             )
         },
         content = {
-            PhotoDetail(photoViewModel, modifier.padding(it))
+            PhotoDetail(
+                photoId,
+                photoViewModel,
+                modifier.padding(it),
+            )
         },
     )
 }
 
 @Composable
 fun PhotoDetail(
+    photoId: String,
     photoViewModel: PhotoViewModel = getViewModel(),
     modifier: Modifier,
 ) {
-    photoViewModel.onPhotoClicked(photoViewModel.photoId)
     val photoDetails by photoViewModel.photoDetails.collectAsState(initial = PhotoDetailUiState())
     Column(Modifier.fillMaxWidth()) {
         Box(Modifier.padding(all = 10.dp)) {

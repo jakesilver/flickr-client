@@ -1,6 +1,5 @@
 package com.jakesilver.photoclient.scintillate
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -19,11 +18,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PhotoViewModel(
-    savedStateHandle: SavedStateHandle,
     private val repository: FlickrRepository,
 ) : ViewModel() {
-
-    val photoId: String = savedStateHandle["photoId"] ?: ""
 
     private val _searchByTag = MutableStateFlow<String?>(null)
     private val _photoDetailUiState = MutableStateFlow(PhotoDetailUiState(isLoading = true))
@@ -35,7 +31,7 @@ class PhotoViewModel(
             repository.getPhotoResultsStream(searchTag)
         }.cachedIn(viewModelScope)
 
-    val photoDetails: StateFlow<PhotoDetailUiState> = _photoDetailUiState.stateIn(
+    val photoDetails: Flow<PhotoDetailUiState> = _photoDetailUiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = PhotoDetailUiState(isLoading = false)
@@ -45,16 +41,23 @@ class PhotoViewModel(
         _searchByTag.value = tag
     }
 
-    fun onPhotoClicked(photoId: String) {
+    fun getPhotoDetails(photoId: String) {
         viewModelScope.launch {
             _photoDetailUiState.value = _photoDetailUiState.value.copy(isLoading = true)
             repository.getPhotoDetails(photoId).collect { photoDetails ->
-                _photoDetailUiState.value =
+                _photoDetailUiState.value = if (photoDetails != null) {
                     PhotoDetailUiState(
                         photoDetails = photoDetails,
                         isLoading = false,
                         errorMessage = null
                     )
+                } else {
+                    PhotoDetailUiState(
+                        photoDetails = null,
+                        isLoading = false,
+                        errorMessage = "No photo found."
+                    )
+                }
             }
         }
     }
