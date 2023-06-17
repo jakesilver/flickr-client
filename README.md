@@ -23,5 +23,6 @@
 - Kotlin Flows
 - Jetpack Compose UI with LazyPaging
 - Jetpack Compose Material3 for Theming and Composables
+- Jetpack Compose Navigation
 - Jetpack ViewModels
 - Coil to asynchronously load images from Flickr URL
