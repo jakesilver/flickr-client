@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.jakesilver.takehome.app'
+    namespace 'com.jakesilver.photoclient.app'
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        applicationId "com.jakesilver.takehome.scintillate"
+        applicationId "com.jakesilver.photoclient.scintillate"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
         versionCode 1

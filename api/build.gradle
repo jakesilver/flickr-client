@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.jakesilver.takehome.api'
+    namespace 'com.jakesilver.photoclient.api'
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
