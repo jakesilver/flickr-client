@@ -11,7 +11,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -34,7 +33,7 @@ class PhotoViewModel(
     val photoDetails: Flow<PhotoDetailUiState> = _photoDetailUiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = PhotoDetailUiState(isLoading = false)
+        initialValue = PhotoDetailUiState(isLoading = false),
     )
 
     fun searchByTag(tag: String) {
@@ -49,13 +48,13 @@ class PhotoViewModel(
                     PhotoDetailUiState(
                         photoDetails = photoDetails,
                         isLoading = false,
-                        errorMessage = null
+                        errorMessage = null,
                     )
                 } else {
                     PhotoDetailUiState(
                         photoDetails = null,
                         isLoading = false,
-                        errorMessage = "No photo found."
+                        errorMessage = "No photo found.",
                     )
                 }
             }
@@ -66,5 +65,5 @@ class PhotoViewModel(
 data class PhotoDetailUiState(
     val photoDetails: PhotoDetails? = null,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 )

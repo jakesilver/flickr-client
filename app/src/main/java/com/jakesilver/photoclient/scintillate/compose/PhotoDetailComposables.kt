@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.navArgument
 import com.jakesilver.photoclient.app.R
 import com.jakesilver.photoclient.scintillate.PhotoDetailUiState
 import com.jakesilver.photoclient.scintillate.PhotoViewModel
@@ -116,7 +115,7 @@ fun PhotoDetail(
                 photoDetails.errorMessage != null -> {
                     Text(
                         text = photoDetails.errorMessage
-                            ?: stringResource(id = R.string.generic_error)
+                            ?: stringResource(id = R.string.generic_error),
                     )
                 }
             }
@@ -128,7 +127,7 @@ fun PhotoDetail(
 private fun DateText(
     date: Date,
     modifier: Modifier,
-    style: androidx.compose.ui.text.TextStyle
+    style: androidx.compose.ui.text.TextStyle,
 ) {
     val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
     Text(

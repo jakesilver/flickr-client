@@ -45,9 +45,11 @@ fun ScintillateNavHost(
         }
         composable(
             route = "photoDetails/{photoId}",
-            arguments = listOf(navArgument("photoId") {
-                type = NavType.StringType
-            })
+            arguments = listOf(
+                navArgument("photoId") {
+                    type = NavType.StringType
+                },
+            ),
         ) { backStackEntry ->
             DetailScreen(
                 title = stringResource(id = R.string.photo_details_title),

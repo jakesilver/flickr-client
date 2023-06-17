@@ -29,7 +29,6 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService) : Flic
         return flow {
             service.getPhotoDetails(photoId).photo
         }
-
     }
 
     private companion object {
