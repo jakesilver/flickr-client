@@ -27,7 +27,7 @@ class FlickrRepositoryImpl constructor(private val service: PhotoService) : Flic
 
     override suspend fun getPhotoDetails(photoId: String): Flow<PhotoDetails?> {
         return flow {
-            service.getPhotoDetails(photoId).photo
+            emit(service.getPhotoDetails(photoId).photo)
         }
     }
 
