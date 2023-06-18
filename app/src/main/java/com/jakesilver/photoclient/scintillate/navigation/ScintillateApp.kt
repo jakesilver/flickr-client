@@ -12,31 +12,31 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jakesilver.photoclient.app.R
-import com.jakesilver.photoclient.scintillate.PhotoViewModel
+import com.jakesilver.photoclient.scintillate.viewmodels.PhotoSearchViewModel
 import com.jakesilver.photoclient.scintillate.compose.DetailScreen
 import com.jakesilver.photoclient.scintillate.compose.Home
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ScintillateApp(
-    photoViewModel: PhotoViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
 ) {
     val navController = rememberNavController()
     ScintillateNavHost(
-        photoViewModel = photoViewModel,
+        photoSearchViewModel = photoSearchViewModel,
         navController = navController,
     )
 }
 
 @Composable
 fun ScintillateNavHost(
-    photoViewModel: PhotoViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
     navController: NavHostController,
 ) {
     NavHost(navController = navController, startDestination = "photo_search") {
         composable("photo_search") {
             Home(
-                photoViewModel = photoViewModel,
+                photoSearchViewModel = photoSearchViewModel,
                 onPhotoClick = { navController.navigate("photoDetails/${it.id}") },
                 modifier = Modifier
                     .fillMaxSize()
@@ -50,15 +50,14 @@ fun ScintillateNavHost(
                     type = NavType.StringType
                 },
             ),
-        ) { backStackEntry ->
+        ) {
             DetailScreen(
                 title = stringResource(id = R.string.photo_details_title),
                 onUpClicked = { navController.navigateUp() },
-                photoId = backStackEntry.arguments?.getString("photoId") ?: "",
-                photoViewModel = photoViewModel,
                 modifier = Modifier
                     .fillMaxSize()
-                    .systemBarsPadding(),
+                    .systemBarsPadding()
+                ,
             )
         }
     }

@@ -27,13 +27,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jakesilver.photoclient.api.PhotoSummary
 import com.jakesilver.photoclient.app.R
-import com.jakesilver.photoclient.scintillate.PhotoViewModel
+import com.jakesilver.photoclient.scintillate.viewmodels.PhotoSearchViewModel
 import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun Home(
-    photoViewModel: PhotoViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
     onPhotoClick: (PhotoSummary) -> Unit,
     modifier: Modifier,
 ) {
@@ -41,11 +41,11 @@ fun Home(
         modifier = modifier,
     ) {
         TagInputTextField(
-            onTagQuery = { tag -> photoViewModel.searchByTag(tag) },
+            onTagQuery = { tag -> photoSearchViewModel.searchByTag(tag) },
             modifier = Modifier.padding(8.dp),
         )
         PhotoSummaryScreen(
-            photoSummaries = photoViewModel.photoSummaries,
+            photoSummaries = photoSearchViewModel.photoSummaries,
             onPhotoClick = onPhotoClick,
             modifier = modifier,
         )

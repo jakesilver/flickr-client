@@ -1,8 +1,9 @@
 package com.jakesilver.photoclient.scintillate.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,13 +18,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jakesilver.photoclient.app.R
-import com.jakesilver.photoclient.scintillate.PhotoDetailUiState
-import com.jakesilver.photoclient.scintillate.PhotoViewModel
+import com.jakesilver.photoclient.scintillate.viewmodels.PhotoDetailsUiState
+import com.jakesilver.photoclient.scintillate.viewmodels.PhotoDetailsViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -34,8 +38,7 @@ import java.util.Locale
 fun DetailScreen(
     title: String,
     onUpClicked: () -> Unit,
-    photoId: String,
-    photoViewModel: PhotoViewModel = getViewModel(),
+    photoDetailsViewModel: PhotoDetailsViewModel = getViewModel(),
     modifier: Modifier,
 ) {
     Scaffold(
@@ -60,8 +63,7 @@ fun DetailScreen(
         },
         content = {
             PhotoDetail(
-                photoId,
-                photoViewModel,
+                photoDetailsViewModel,
                 modifier.padding(it),
             )
         },
@@ -70,20 +72,25 @@ fun DetailScreen(
 
 @Composable
 fun PhotoDetail(
-    photoId: String,
-    photoViewModel: PhotoViewModel = getViewModel(),
+    photoDetailsViewModel: PhotoDetailsViewModel,
     modifier: Modifier,
 ) {
-    val photoDetails by photoViewModel.photoDetails.collectAsState(initial = PhotoDetailUiState())
-    Column(Modifier.fillMaxWidth()) {
-        Box(Modifier.padding(all = 10.dp)) {
+    val uiState by photoDetailsViewModel.photoDetailsUiState.collectAsState(initial = PhotoDetailsUiState(isLoading = true))
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier.padding(all = 10.dp)
+        ) {
             when {
-                photoDetails.isLoading -> {
+                uiState.isLoading -> {
                     CircularProgressIndicator()
                 }
 
-                photoDetails.photoDetails != null -> {
-                    photoDetails.photoDetails?.let { photoDetails ->
+                uiState.photoDetails != null -> {
+                    uiState.photoDetails?.let { photoDetails ->
                         PhotoImage(
                             url = photoDetails.url,
                             contentDescription = photoDetails.description,
@@ -109,15 +116,19 @@ fun PhotoDetail(
                             Modifier.padding(vertical = 4.dp),
                             style = MaterialTheme.typography.bodyLarge,
                         )
+                    } ?: run {
+                        Text(
+                            text = stringResource(id = R.string.generic_error)
+                        )
                     }
                 }
 
-                photoDetails.errorMessage != null -> {
+                uiState.errorMessage != null -> {
                     Text(
-                        text = photoDetails.errorMessage
-                            ?: stringResource(id = R.string.generic_error),
+                        text = uiState.errorMessage ?: stringResource(id = R.string.generic_error),
                     )
                 }
+
             }
         }
     }

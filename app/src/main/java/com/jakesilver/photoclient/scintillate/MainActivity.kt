@@ -16,11 +16,12 @@ import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jakesilver.photoclient.scintillate.navigation.ScintillateApp
 import com.jakesilver.photoclient.scintillate.ui.theme.ScintillateTheme
+import com.jakesilver.photoclient.scintillate.viewmodels.PhotoSearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val photoViewModel: PhotoViewModel by viewModel()
+    private val photoSearchViewModel: PhotoSearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     ScintillateApp(
-                        photoViewModel = photoViewModel,
+                        photoSearchViewModel = photoSearchViewModel,
                     )
                 }
             }
