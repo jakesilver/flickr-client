@@ -68,9 +68,7 @@ androidx-compose-navigation = { module = "androidx.navigation:navigation-compose
 androidx-compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
-androidx-compose-ui-uitextfonts = { module = "androidx.compose.ui:ui-text-google-fonts" }
-androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
-androidx-compose-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding" }
+androidx-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxlifecycle" }
 
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxlifecycle" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxlifecycle" }
@@ -117,7 +115,6 @@ landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.re
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 
-swipe = "me.saket.swipe:swipe:1.1.1"
 
 # Build logic dependencies
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
