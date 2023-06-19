@@ -1,10 +1,13 @@
 package com.jakesilver.photoclient.scintillate.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -81,8 +84,11 @@ fun PhotoDetail(
         )
     )
     Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.verticalScroll(
+            rememberScrollState()
+        ),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when {
             uiState.isLoading -> {
@@ -94,14 +100,13 @@ fun PhotoDetail(
                     PhotoImage(
                         url = photoDetails.url,
                         contentDescription = photoDetails.description,
-                        modifier = Modifier.size(160.dp),
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     Text(
                         text = photoDetails.title,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 4.dp)
                             .wrapContentWidth(Alignment.CenterHorizontally),
                         style = MaterialTheme.typography.bodyLarge,
                     )
@@ -110,7 +115,6 @@ fun PhotoDetail(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 4.dp)
                             .wrapContentWidth(Alignment.CenterHorizontally),
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -118,14 +122,12 @@ fun PhotoDetail(
                         date = photoDetails.dateTaken,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 4.dp)
                             .wrapContentWidth(Alignment.CenterHorizontally),
                         style = MaterialTheme.typography.bodyLarge,
                     )
                     DateText(
                         date = photoDetails.datePosted,
                         modifier = Modifier
-                            .fillMaxWidth()
                             .padding(vertical = 4.dp)
                             .wrapContentWidth(Alignment.CenterHorizontally),
                         style = MaterialTheme.typography.bodyLarge,

@@ -57,7 +57,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
                 return@withContext PhotoDetailsResponse(
                     photo = PhotoDetails(
                         id = photo.id,
-                        url = photo.url,
+                        url = photo.largeUrl,
                         title = photo.title,
                         description = photo.description,
                         dateTaken = photo.dateTaken,
