@@ -4,6 +4,7 @@ import com.googlecode.flickrjandroid.Flickr
 import com.googlecode.flickrjandroid.Flickr.SAFETYLEVEL_SAFE
 import com.googlecode.flickrjandroid.photos.PhotosInterface
 import com.googlecode.flickrjandroid.photos.SearchParameters
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Date
@@ -18,7 +19,10 @@ interface PhotoService {
     suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse
 }
 
-internal class PhotoServiceImpl(apiKey: String) : PhotoService {
+internal class PhotoServiceImpl(
+    apiKey: String,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : PhotoService {
     private val flickr: PhotosInterface = Flickr(apiKey).photosInterface
 
     override suspend fun getPhotoSummariesByTag(
@@ -26,7 +30,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
         numImagePerPage: Int,
         page: Int,
     ): PhotoSummaryResponse {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             try {
                 val photoList = flickr.search(
                     SearchParameters().apply {
@@ -51,7 +55,7 @@ internal class PhotoServiceImpl(apiKey: String) : PhotoService {
     }
 
     override suspend fun getPhotoDetails(photoId: String?): PhotoDetailsResponse {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             try {
                 val photo = flickr.getInfo(photoId, null)
                 return@withContext PhotoDetailsResponse(

@@ -7,17 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface FlickrRepository {
-
-    suspend fun testSearch(tag: String): PhotoSummaryResponse
     fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>>
     suspend fun getPhotoDetails(photoId: String): Flow<PhotoDetails?>
 }
 
 class FlickrRepositoryImpl constructor(private val service: PhotoService) : FlickrRepository {
-    override suspend fun testSearch(tag: String): PhotoSummaryResponse {
-        return service.getPhotoSummariesByTag(tag, 10, 1)
-    }
-
     override fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
