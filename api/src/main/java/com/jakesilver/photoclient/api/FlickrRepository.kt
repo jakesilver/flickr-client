@@ -11,7 +11,7 @@ interface FlickrRepository {
     suspend fun getPhotoDetails(photoId: String): Flow<PhotoDetails?>
 }
 
-class FlickrRepositoryImpl constructor(private val service: PhotoService) : FlickrRepository {
+class FlickrRepositoryImpl(private val service: PhotoService) : FlickrRepository {
     override suspend fun getPhotoResultsStream(tag: String): Flow<PagingData<PhotoSummary>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),

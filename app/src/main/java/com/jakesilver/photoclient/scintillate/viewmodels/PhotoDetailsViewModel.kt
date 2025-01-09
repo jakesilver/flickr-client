@@ -19,12 +19,12 @@ class PhotoDetailsViewModel(
 
     private val photoId: String? = savedStateHandle.get<String>(PHOTO_ID_SAVED_STATE_KEY)
 
-    private val _photoDetailsUiState = MutableStateFlow(PhotoDetailsUiState(isLoading = true))
+    private val _photoDetailsUiState = MutableStateFlow<PhotoDetailsUiState>(PhotoDetailsUiState.Loading)
 
     val photoDetailsUiState: StateFlow<PhotoDetailsUiState> = _photoDetailsUiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = PhotoDetailsUiState(isLoading = true),
+        initialValue = PhotoDetailsUiState.Loading
     )
 
     init {
@@ -32,10 +32,8 @@ class PhotoDetailsViewModel(
             if (photoId != null) {
                 getPhotoDetails(photoId)
             } else {
-                _photoDetailsUiState.value = PhotoDetailsUiState(
-                    photoDetails = null,
-                    isLoading = false,
-                    errorMessage = "No photo found.",
+                _photoDetailsUiState.value = PhotoDetailsUiState.Error(
+                    message = "No photo found.",
                 )
             }
         }
@@ -44,16 +42,12 @@ class PhotoDetailsViewModel(
     private suspend fun getPhotoDetails(photoId: String) {
         repository.getPhotoDetails(photoId).collect { photoDetails ->
             _photoDetailsUiState.value = if (photoDetails != null) {
-                PhotoDetailsUiState(
-                    photoDetails = photoDetails,
-                    isLoading = false,
-                    errorMessage = null,
+                PhotoDetailsUiState.PhotoDetails(
+                    details = photoDetails,
                 )
             } else {
-                PhotoDetailsUiState(
-                    photoDetails = null,
-                    isLoading = false,
-                    errorMessage = "No photo found.",
+                PhotoDetailsUiState.Error(
+                    message = "No photo found.",
                 )
             }
         }
@@ -64,8 +58,8 @@ class PhotoDetailsViewModel(
     }
 }
 
-data class PhotoDetailsUiState(
-    val photoDetails: PhotoDetails? = null,
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null,
-)
+sealed class PhotoDetailsUiState {
+    object Loading : PhotoDetailsUiState()
+    data class Error(val message: String) : PhotoDetailsUiState()
+    data class PhotoDetails(val details: com.jakesilver.photoclient.api.PhotoDetails) : PhotoDetailsUiState()
+}
