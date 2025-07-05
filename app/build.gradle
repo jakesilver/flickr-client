@@ -1,6 +1,11 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
+}
+
+kotlin {
+    jvmToolchain(libs.versions.jvmToolChain.get().toInteger())
 }
 
 android {
@@ -42,12 +47,8 @@ android {
         compose true
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
-
     composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.runtime.get()
+        kotlinCompilerExtensionVersion libs.versions.compose.bom.get()
     }
 }
 
@@ -64,6 +65,7 @@ dependencies {
     implementation libs.koin.compose
 
     // Compose
+    implementation platform(libs.androidx.compose.bom)
     implementation libs.androidx.activity.compose
     implementation libs.androidx.compose.animation.animation
     implementation libs.androidx.compose.foundation.layout
@@ -77,8 +79,6 @@ dependencies {
     implementation libs.androidx.paging.ktx
     implementation libs.androidx.paging.compose
 
-    implementation libs.accompanist.systemUi
-    implementation libs.accompanist.coil
     implementation libs.coil.compose
     implementation libs.landscapist.coil
     implementation libs.androidx.lifecycle.runtime.ktx

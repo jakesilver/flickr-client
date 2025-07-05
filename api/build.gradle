@@ -1,6 +1,10 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+kotlin {
+    jvmToolchain(libs.versions.jvmToolChain.get().toInteger())
 }
 
 android {
@@ -24,13 +28,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            buildConfigField "String", "FLICKR_API_KEY", "\"2b2dfa9923da3b04ce8f64cf7b91d373\""
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
