@@ -47,7 +47,7 @@ fun DetailScreen(
                 title = {
                     Text(
                         text = title,
-                        color = MaterialTheme.colorScheme.background,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 },
                 navigationIcon = {
@@ -55,7 +55,7 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onSurface,
                         )
                     }
                 },
