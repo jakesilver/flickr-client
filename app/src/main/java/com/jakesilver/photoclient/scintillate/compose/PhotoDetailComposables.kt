@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jakesilver.photoclient.scintillate.viewmodels.PhotoDetailsUiState
 import com.jakesilver.photoclient.scintillate.viewmodels.PhotoDetailsViewModel
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,7 +38,7 @@ import java.util.Locale
 fun DetailScreen(
     title: String,
     onUpClicked: () -> Unit,
-    photoDetailsViewModel: PhotoDetailsViewModel = getViewModel(),
+    photoDetailsViewModel: PhotoDetailsViewModel = koinViewModel(),
     modifier: Modifier,
 ) {
     Scaffold(
@@ -52,7 +53,7 @@ fun DetailScreen(
                 navigationIcon = {
                     IconButton(onClick = { onUpClicked() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White,
                         )

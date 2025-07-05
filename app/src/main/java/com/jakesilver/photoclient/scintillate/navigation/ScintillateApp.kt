@@ -15,11 +15,11 @@ import com.jakesilver.photoclient.app.R
 import com.jakesilver.photoclient.scintillate.viewmodels.PhotoSearchViewModel
 import com.jakesilver.photoclient.scintillate.compose.DetailScreen
 import com.jakesilver.photoclient.scintillate.compose.Home
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ScintillateApp(
-    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = koinViewModel(),
 ) {
     val navController = rememberNavController()
     ScintillateNavHost(
@@ -30,7 +30,7 @@ fun ScintillateApp(
 
 @Composable
 fun ScintillateNavHost(
-    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = koinViewModel(),
     navController: NavHostController,
 ) {
     NavHost(navController = navController, startDestination = "photo_search") {

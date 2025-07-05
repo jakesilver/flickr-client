@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +28,11 @@ import com.jakesilver.photoclient.api.PhotoSummary
 import com.jakesilver.photoclient.app.R
 import com.jakesilver.photoclient.scintillate.viewmodels.PhotoSearchViewModel
 import kotlinx.coroutines.flow.Flow
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun Home(
-    photoSearchViewModel: PhotoSearchViewModel = getViewModel(),
+    photoSearchViewModel: PhotoSearchViewModel = koinViewModel(),
     onPhotoClick: (PhotoSummary) -> Unit,
     modifier: Modifier,
 ) {
@@ -64,7 +63,7 @@ private fun PhotoSummaryScreen(
     } else {
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
-            modifier = Modifier.padding(12.dp),
+            modifier = modifier.padding(12.dp),
             contentPadding = PaddingValues(all = 12.dp),
         ) {
             items(
@@ -99,7 +98,6 @@ private fun EmptyPhotoSearch(modifier: Modifier) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PhotoSummaryItem(photo: PhotoSummary, onClick: () -> Unit) {
     Card(
