@@ -74,6 +74,7 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 androidx-paging-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "paging" }
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "paging" }
 
 androidx-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
