@@ -13,6 +13,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -36,6 +38,8 @@ fun Home(
     onPhotoClick: (PhotoSummary) -> Unit,
     modifier: Modifier,
 ) {
+    val uiState by photoSearchViewModel.uiState.collectAsState()
+    
     Column(
         modifier = modifier,
     ) {
@@ -43,11 +47,14 @@ fun Home(
             onTagQuery = { tag -> photoSearchViewModel.searchByTag(tag) },
             modifier = Modifier.padding(8.dp),
         )
-        PhotoSummaryScreen(
-            photoSummaries = photoSearchViewModel.photoSummaries,
-            onPhotoClick = onPhotoClick,
-            modifier = modifier,
-        )
+        
+        uiState.photos?.let { photosFlow ->
+            PhotoSummaryScreen(
+                photoSummaries = photosFlow,
+                onPhotoClick = onPhotoClick,
+                modifier = modifier,
+            )
+        } ?: EmptyPhotoSearch(modifier = modifier)
     }
 }
 
@@ -62,7 +69,7 @@ private fun PhotoSummaryScreen(
         EmptyPhotoSearch(modifier = modifier)
     } else {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(1),
+            columns = GridCells.Fixed(2),
             modifier = modifier.padding(12.dp),
             contentPadding = PaddingValues(all = 12.dp),
         ) {

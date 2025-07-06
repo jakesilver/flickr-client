@@ -6,26 +6,40 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jakesilver.photoclient.api.FlickrRepository
 import com.jakesilver.photoclient.api.PhotoSummary
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+data class PhotoSearchUiState(
+    val searchQuery: String = "",
+    val isLoading: Boolean = false,
+    val photos: Flow<PagingData<PhotoSummary>>? = null
+)
 
 class PhotoSearchViewModel(
     private val repository: FlickrRepository,
 ) : ViewModel() {
 
-    private val _searchByTag = MutableStateFlow<String?>(null)
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val photoSummaries: Flow<PagingData<PhotoSummary>> = _searchByTag
-        .filterNotNull()
-        .flatMapLatest { searchTag ->
-            repository.getPhotoResultsStream(searchTag)
-        }.cachedIn(viewModelScope)
+    private val _uiState = MutableStateFlow(PhotoSearchUiState())
+    val uiState: StateFlow<PhotoSearchUiState> = _uiState.asStateFlow()
 
     fun searchByTag(tag: String) {
-        _searchByTag.value = tag
+        if (tag.isBlank()) return
+        
+        _uiState.value = _uiState.value.copy(
+            searchQuery = tag,
+            isLoading = true,
+            photos = null
+        )
+        
+        viewModelScope.launch {
+            val photosFlow = repository.getPhotoResultsStream(tag).cachedIn(viewModelScope)
+            _uiState.value = _uiState.value.copy(
+                isLoading = false,
+                photos = photosFlow
+            )
+        }
     }
 }
