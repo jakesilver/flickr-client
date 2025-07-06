@@ -20,4 +20,3 @@ dependencyResolutionManagement {
 
 include ':app'
 include ':api'
-include ':ui'
