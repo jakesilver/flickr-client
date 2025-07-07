@@ -4,7 +4,7 @@
 
 |Search|Details|
 |---|---|
-|<img src="https://github.com/jakesilver/flickr-client/assets/5214972/2a3e6ed9-f980-46ef-a535-3e82e8db0f44" width="300" /> | <img src="https://github.com/jakesilver/flickr-client/assets/5214972/98dc5a97-1d30-49e9-8679-976c59078801" width="300" /> |
+|<img src="https://github.com/user-attachments/assets/4f921e4d-bec3-4745-8f0c-b27512cb3c7d" alt="Photo Search screen with basset hound search results" width="300" /> | <img src="https://github.com/user-attachments/assets/bab38371-d921-4aa1-bf6e-652e448b7d43" alt="Photo Details screen with a specific basset hound photo titled Major" width="300" /> |
 
 
 #### Features
