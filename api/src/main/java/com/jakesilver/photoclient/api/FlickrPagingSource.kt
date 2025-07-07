@@ -22,7 +22,7 @@ class FlickrPagingSource(
             LoadResult.Page(
                 data = photos,
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (page == response.totalPhotos) null else page + 1,
+                nextKey = if (photos.size < params.loadSize) null else page + 1,
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

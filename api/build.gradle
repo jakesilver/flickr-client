@@ -61,5 +61,7 @@ dependencies {
 
     // Test
     testImplementation libs.junit
+    testImplementation libs.kotlin.coroutines.test
+    testImplementation libs.androidx.paging.testing
     androidTestImplementation libs.junit
 }

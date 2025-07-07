@@ -68,7 +68,7 @@ internal class PhotoServiceImpl(
                         datePosted = photo.datePosted,
                     ),
                 )
-            } catch (exception: java.lang.Exception) {
+            } catch (_: java.lang.Exception) {
                 return@withContext PhotoDetailsResponse(error = Error.NoPhotoFound)
             }
         }
