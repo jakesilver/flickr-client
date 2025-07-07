@@ -86,7 +86,8 @@ private fun PhotoSummaryScreen(
                 count = photoPagingItems.itemCount,
                 key = { index ->
                     val photo = photoPagingItems[index]
-                    photo?.id ?: ""
+                    // Combine index with photo ID to ensure uniqueness even with duplicate IDs from API
+                    "${index}_${photo?.id ?: "unknown"}"
                 },
             ) { index ->
                 val photo = photoPagingItems[index] ?: return@items
